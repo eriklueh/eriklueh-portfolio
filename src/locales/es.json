@@ -1,0 +1,18 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "about": "Sobre mí",
+    "projects": "Proyectos",
+    "articles": "Artículos",
+    "contact": "Contacto"
+  },
+  "profile": {
+    "name": "Tu Nombre",
+    "role": "Desarrollador"
+  },
+  "dropdown": {
+    "profile": "Perfil",
+    "settings": "Configuración",
+    "logout": "Cerrar sesión"
+  }
+}
