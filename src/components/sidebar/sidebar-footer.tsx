@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Linkedin, Mail, Settings, Twitter } from "lucide-react";
 import { ThemeToggle } from "@/components/common/mode-toggle";
@@ -59,7 +59,7 @@ export function SidebarFooter() {
 
   const settingsButtonVariants = {
     normal: { x: 0 },
-    moved: { x: isExpanded ? -40 : 0 },
+    moved: { x: -40 },
   };
 
   const socialIconsVariants = {
