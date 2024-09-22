@@ -68,7 +68,10 @@ export function SidebarNavigation() {
                 <AnimatePresence>
                   {isExpanded && (
                     <motion.span
-                      className="text-sm text-foreground whitespace-nowrap"
+                      className={cn(
+                        "text-sm font-bold whitespace-nowrap",
+                        activeItem === item.href ? "text-primary" : "text-muted-foreground"
+                      )}
                       initial={{ opacity: 0, width: 0 }}
                       animate={{ opacity: 1, width: "auto" }}
                       exit={{ opacity: 0, width: 0 }}

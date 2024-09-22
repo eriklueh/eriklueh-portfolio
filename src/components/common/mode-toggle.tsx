@@ -10,7 +10,7 @@ export function ThemeToggle() {
 
     return (
       <motion.button
-        className="rounded-md transition-all duration-200 p-2"
+        className="rounded-md transition-all duration-200 p-2 z-10"
         onClick={() => setTheme(theme === "light" ? "dark" : "light")}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
