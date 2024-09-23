@@ -31,33 +31,47 @@ export default function RootLayout({
   }, []);
 
   return (
-    <html lang="es">
-    <body className={inter.className}>
-    <ThemeProvider
-      attribute="class"
-      defaultTheme="system"
-      enableSystem
-      disableTransitionOnChange
-    >
-      <LanguageProvider>
-        <div className="flex h-screen bg-sidebar-bg dark:bg-background">
-          <Sidebar />
-          <motion.div
-            className="flex flex-1 flex-col px-1"
-            transition={{ duration: 0.3 }}
-          >
-            <div className="h-2" />
-            <main className="relative flex-1 overflow-y-auto overflow-x-hidden rounded-3xl bg-background p-6 shadow-xl border-2">
-              <SidebarToggle />
-              {children}
-            </main>
-            <div className="h-2" />
-          </motion.div>
-        </div>
-        <StyledToaster />
-      </LanguageProvider>
-    </ThemeProvider>
-    </body>
-    </html>
+      <html lang="es">
+      <body className={inter.className}>
+      <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+      >
+        <LanguageProvider>
+          <div className="dark:bg-dark-sidebar-bg flex h-screen bg-sidebar-bg">
+            <Sidebar />
+            <motion.div
+                className="flex flex-1 flex-col px-1"
+                transition={{ duration: 0.3 }}
+            >
+              <div className="h-2" />
+              <main className="relative flex-1 overflow-y-auto overflow-x-hidden rounded-3xl border-2 bg-background p-2 shadow-xl">
+                <div
+                    className="absolute inset-0 rounded-3xl"
+                    style={{
+                      backgroundImage: `radial-gradient(circle, hsl(var(--muted-foreground) / 0.2) 1px, transparent 1px)`,
+                      backgroundSize: "25px 25px",
+                      zIndex: 0,
+                    }}
+                />
+                <div className="relative z-10">
+                  <div className="sticky top-0">
+                    <div className="float-left">
+                      <SidebarToggle />
+                    </div>
+                  </div>
+                  {children}
+                </div>
+              </main>
+              <div className="h-2" />
+            </motion.div>
+          </div>
+          <StyledToaster />
+        </LanguageProvider>
+      </ThemeProvider>
+      </body>
+      </html>
   );
 }

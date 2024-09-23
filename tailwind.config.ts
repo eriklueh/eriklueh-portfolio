@@ -28,6 +28,7 @@ export default {
           foreground: "hsl(var(--card-foreground))",
         },
         "sidebar-bg": "#f0f0f0",
+        "dark-sidebar-bg": "rgb(21,21,21)",
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",

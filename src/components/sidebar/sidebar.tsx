@@ -31,7 +31,7 @@ export function Sidebar() {
       {isMobile && <SidebarOverlay />}
       <motion.aside
         className={cn(
-          "bg-sidebar-bg flex h-screen flex-col overflow-hidden dark:bg-background",
+          "bg-sidebar-bg flex h-screen flex-col overflow-hidden dark:bg-dark-sidebar-bg ",
           isMobile ? "fixed inset-y-0 left-0 z-50" : "relative"
         )}
         initial={false}

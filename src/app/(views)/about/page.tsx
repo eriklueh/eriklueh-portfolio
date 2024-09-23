@@ -15,6 +15,39 @@ export default function About() {
                 </Card>
                 <Card>
                     <CardHeader>
+                        <CardTitle>Experiencia</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p>Con más de 5 años de experiencia en desarrollo web, he trabajado en proyectos diversos que van desde aplicaciones empresariales hasta startups innovadoras.</p>
+                    </CardContent>
+                </Card>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Experiencia</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p>Con más de 5 años de experiencia en desarrollo web, he trabajado en proyectos diversos que van desde aplicaciones empresariales hasta startups innovadoras.</p>
+                    </CardContent>
+                </Card>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Experiencia</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p>Con más de 5 años de experiencia en desarrollo web, he trabajado en proyectos diversos que van desde aplicaciones empresariales hasta startups innovadoras.</p>
+                    </CardContent>
+                </Card>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Experiencia</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p>Con más de 5 años de experiencia en desarrollo web, he trabajado en proyectos diversos que van desde aplicaciones empresariales hasta startups innovadoras.</p>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader>
                         <CardTitle>Habilidades</CardTitle>
                     </CardHeader>
                     <CardContent>
