@@ -54,3 +54,38 @@ export const DottedIcosahedron: React.FC = () => {
 
   return <DottedShape points={points} connections={connections} />
 }
+
+export const DottedDodecahedron: React.FC = () => {
+  const phi = (1 + Math.sqrt(5)) / 2
+  const points = useMemo<Point[]>(() => [
+    [-1, -1, -1], [1, -1, -1], [1, 1, -1], [-1, 1, -1],
+    [-1, -1, 1], [1, -1, 1], [1, 1, 1], [-1, 1, 1],
+    [0, -phi, -1/phi], [0, phi, -1/phi], [0, phi, 1/phi], [0, -phi, 1/phi],
+    [-1/phi, 0, -phi], [1/phi, 0, -phi], [1/phi, 0, phi], [-1/phi, 0, phi],
+    [-phi, -1/phi, 0], [-phi, 1/phi, 0], [phi, 1/phi, 0], [phi, -1/phi, 0]
+  ], [])
+
+  const connections = useMemo<Connection[]>(() => [
+    [0, 8], [0, 12], [0, 16], [1, 8], [1, 13], [1, 19],
+    [2, 9], [2, 13], [2, 18], [3, 9], [3, 12], [3, 17],
+    [4, 11], [4, 15], [4, 16], [5, 11], [5, 14], [5, 19],
+    [6, 10], [6, 14], [6, 18], [7, 10], [7, 15], [7, 17],
+    [8, 11], [9, 10], [12, 13], [14, 15], [16, 17], [18, 19]
+  ], [])
+
+  return <DottedShape points={points} connections={connections} />
+}
+
+export const DottedTetrahedron: React.FC = () => {
+  const points = useMemo<Point[]>(() => [
+    [1, 1, 1], [-1, -1, 1], [-1, 1, -1], [1, -1, -1]
+  ], [])
+
+  const connections = useMemo<Connection[]>(() => [
+    [0, 1], [0, 2], [0, 3],
+    [1, 2], [1, 3],
+    [2, 3]
+  ], [])
+
+  return <DottedShape points={points} connections={connections} />
+}
