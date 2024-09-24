@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
-import { Briefcase, Home, Mail, User } from "lucide-react";
+import { Briefcase, Home, Mail, User, Codesandbox, Receipt } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "@/hooks/useTranslations";
 import { useSidebar } from "@/hooks/use-sidebar";
@@ -17,7 +17,10 @@ export function SidebarNavigation() {
     { icon: Home, label: t("nav.home"), href: "/" },
     { icon: User, label: t("nav.about"), href: "/about" },
     { icon: Briefcase, label: t("nav.projects"), href: "/projects" },
+    { icon: Receipt, label: t("nav.pricing"), href: "/pricing" },
+    { icon: Codesandbox, label: t("nav.sandbox"), href: "/sandbox" },
     { icon: Mail, label: t("nav.contact"), href: "/contact" },
+
   ];
 
   return (

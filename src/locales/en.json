@@ -4,7 +4,9 @@
     "about": "About",
     "projects": "Projects",
     "articles": "Articles",
-    "contact": "Contact"
+    "contact": "Contact",
+    "pricing": "Pricing",
+    "sandbox": "Sandbox"
   },
   "profile": {
     "name": "Your Name",
