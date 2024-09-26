@@ -63,7 +63,7 @@ export function SidebarNavigation() {
                     size={18}
                     className={cn(
                       "transition-colors duration-200",
-                      activeItem === item.href ? "text-foreground" : "text-muted-foreground",
+                      activeItem === item.href ? "text-primary" : "text-muted-foreground",
                       "group-hover:text-foreground"
                     )}
                   />

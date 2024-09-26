@@ -16,47 +16,25 @@ export default function Home() {
   }
 
   return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="space-y-8">
-          <motion.div
-              className="w-full"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-          >
+      <div className="container mx-auto p-4">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-2">
+          <div className="lg:col-span-3 space-y-2">
             <MinimalBentoProfileCard />
-          </motion.div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-            <motion.div
-                className="lg:col-span-3"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <ExperienceSearchCard searchTerm={searchTerm} onSearchChange={setSearchTerm} />
-            </motion.div>
-
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-            >
-              <SkillsCard onSkillClick={handleSkillClick} />
-            </motion.div>
+            <SkillsCard onSkillClick={handleSkillClick} />
+            <ExperienceSearchCard searchTerm={searchTerm} onSearchChange={setSearchTerm} />
           </div>
-
-          <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-          >
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-              {sections.map((section) => (
-                  <SectionCard key={section.title} {...section} />
-              ))}
-            </div>
-          </motion.div>
+          <div className="lg:col-span-1 space-y-2">
+            {sections.map((section, index) => (
+                <motion.div
+                    key={section.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                >
+                  <SectionCard {...section} />
+                </motion.div>
+            ))}
+          </div>
         </div>
       </div>
   )

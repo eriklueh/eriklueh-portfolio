@@ -47,12 +47,12 @@ export default function RootLayout({
                         transition={{ duration: 0.3 }}
                     >
                         <div className="h-2" />
-                        <main className="relative flex-1 overflow-y-auto overflow-x-hidden rounded-3xl border-2 bg-background p-2 shadow-xl">
+                        <main className="relative flex-1 overflow-y-auto overflow-x-hidden rounded-3xl bg-background p-2 shadow-xl">
                             <div className="relative min-h-full">
                                 <div
                                     className="absolute inset-0 rounded-3xl"
                                     style={{
-                                        backgroundImage: `radial-gradient(circle, hsl(var(--muted-foreground) / 0.2) 1px, transparent 1px)`,
+                                        backgroundImage: `radial-gradient(circle, hsl(var(--muted-foreground) / 0.2) 1.5px, transparent 1px)`,
                                         backgroundSize: "25px 25px",
                                         zIndex: 0,
                                     }}

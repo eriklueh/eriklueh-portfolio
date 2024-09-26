@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
-import type { Connection, Point } from "@/types/types";
-import { DottedShape } from "@/components/three/dotted-shape";
+import type { Connection, Point } from "@/types/types"
+import { DottedShape } from "@/components/three/dotted-shape"
 
 export const DottedCube: React.FC = () => {
   const points = useMemo<Point[]>(() => [
