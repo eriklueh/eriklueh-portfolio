@@ -15,26 +15,63 @@ export default function Home() {
     setSearchTerm(skill)
   }
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 260,
+        damping: 20
+      }
+    }
+  }
+
   return (
       <div className="container mx-auto p-4">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-2">
-          <div className="lg:col-span-3 space-y-2">
-            <MinimalBentoProfileCard />
-            <SkillsCard onSkillClick={handleSkillClick} />
-            <ExperienceSearchCard searchTerm={searchTerm} onSearchChange={setSearchTerm} />
-          </div>
-          <div className="lg:col-span-1 space-y-2">
+          <motion.div
+              className="lg:col-span-3 space-y-2"
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+          >
+            <motion.div variants={itemVariants}>
+              <MinimalBentoProfileCard />
+            </motion.div>
+            <motion.div variants={itemVariants}>
+              <SkillsCard onSkillClick={handleSkillClick} />
+            </motion.div>
+            <motion.div variants={itemVariants}>
+              <ExperienceSearchCard searchTerm={searchTerm} onSearchChange={setSearchTerm} />
+            </motion.div>
+          </motion.div>
+          <motion.div
+              className="lg:col-span-1 space-y-2"
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+          >
             {sections.map((section, index) => (
                 <motion.div
                     key={section.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
+                    variants={itemVariants}
                 >
                   <SectionCard {...section} />
                 </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
   )

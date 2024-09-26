@@ -1,77 +1,110 @@
-'use client'
+"use client";
 
-import {useState} from 'react'
-import {Button} from '@/components/ui/button'
-import {Input} from '@/components/ui/input'
-import {Textarea} from '@/components/ui/textarea'
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+
+const formSchema = z.object({
+  name: z.string().min(2, { message: "Name must be at least 2 characters." }),
+  email: z.string().email({ message: "Invalid email address." }),
+  message: z
+    .string()
+    .min(10, { message: "Message must be at least 10 characters." }),
+});
+
+type FormValues = z.infer<typeof formSchema>;
 
 export default function Contact() {
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        message: '',
-    })
+  const form = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      message: "",
+    },
+  });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const {name, value} = e.target
-        setFormData(prevState => ({...prevState, [name]: value}))
-    }
+  const onSubmit = (data: FormValues) => {
+    const subject = encodeURIComponent("New Contact Form Submission");
+    const body = encodeURIComponent(
+      `Name: ${data.name}\nEmail: ${data.email}\n\nMessage:\n${data.message}`,
+    );
+    const mailtoLink = `mailto:erikhire@nuvadi.com?subject=${subject}&body=${body}`;
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault()
-        // Aquí iría la lógica para enviar el formulario
-        console.log('Form submitted:', formData)
-        // Resetear el formulario
-        setFormData({name: '', email: '', message: ''})
-    }
+    window.location.href = mailtoLink;
 
-    return (
-        <div className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold mb-6">Contacto</h1>
-            <form onSubmit={handleSubmit} className="max-w-md mx-auto">
-                <div className="mb-4">
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                        Nombre
-                    </label>
-                    <Input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="mb-4">
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                        Email
-                    </label>
-                    <Input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="mb-4">
-                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-                        Mensaje
-                    </label>
-                    <Textarea
-                        id="message"
-                        name="message"
-                        rows={4}
-                        value={formData.message}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <Button type="submit" className="w-full">
-                    Enviar Mensaje
-                </Button>
-            </form>
-        </div>
-    )
+    toast.success("Email client opened", {
+      description:
+        "Please send the email from your client to complete the process.",
+    });
+
+    form.reset();
+  };
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="mb-6 text-3xl font-bold">Contact</h1>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="mx-auto max-w-md space-y-6"
+        >
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="message"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Message</FormLabel>
+                <FormControl>
+                  <Textarea {...field} rows={4} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="submit" className="w-full">
+            Send Message
+          </Button>
+        </form>
+      </Form>
+    </div>
+  );
 }

@@ -1,10 +1,9 @@
 "use client";
 
-import React, { useCallback, useState } from "react";
-import type { Variants } from "framer-motion";
-import { AnimatePresence, motion } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import React, { useEffect, useRef, useState } from "react";
+import { motion, useAnimation, useScroll, useTransform } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import Image from "next/image";
 
 interface TimelineEvent {
   year: number;
@@ -65,119 +64,119 @@ const timelineEvents: readonly TimelineEvent[] = [
   },
 ] as const;
 
-const contentVariants: Variants = {
-  enter: (direction: number) => ({
-    x: direction > 0 ? 500 : -500,
-    opacity: 0,
-  }),
-  center: {
-    x: 0,
-    opacity: 1,
-  },
-  exit: (direction: number) => ({
-    x: direction < 0 ? 500 : -500,
-    opacity: 0,
-  }),
+const TimelineItem: React.FC<{ event: TimelineEvent; isActive: boolean }> = ({
+  event,
+  isActive,
+}) => {
+  const controls = useAnimation();
+  const [ref, inView] = useInView({
+    threshold: 0.5,
+    triggerOnce: false,
+  });
+
+  useEffect(() => {
+    const animateControls = async () => {
+      if (inView) {
+        await controls.start({ opacity: 1, y: 0 });
+      } else {
+        await controls.start({ opacity: 0, y: 50 });
+      }
+    };
+
+    animateControls().catch((error) => {
+      console.error("Animation failed:", error);
+    });
+  }, [controls, inView]);
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 50 }}
+      animate={controls}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="mb-16 flex flex-row"
+    >
+      <div className="mr-4 flex flex-col items-center">
+        <motion.div
+          className={`h-4 w-4 rounded-full ${inView ? "bg-primary" : "bg-gray-300"}`}
+          animate={{ scale: inView ? 1.2 : 1 }}
+          transition={{ duration: 0.3 }}
+        />
+        <div className="my-2 h-full w-px bg-gray-300" />
+      </div>
+      <div className="flex-1">
+        <motion.div
+          animate={{
+            opacity: inView ? 1 : 0.5,
+            scale: inView ? 1.05 : 1,
+          }}
+          transition={{ duration: 0.3 }}
+          className="ml-2"
+        >
+          <motion.span
+            className={`ml-2 text-lg font-bold ${inView ? "text-primary" : "text-foreground"}`}
+            animate={{ opacity: inView ? 1 : 0.5 }}
+            transition={{ duration: 0.3 }}
+          >
+            {event.year}
+          </motion.span>
+          <div className="mb-4">
+            <Image
+              src={event.image}
+              alt={event.title}
+              width={600}
+              height={400}
+              className="h-auto w-full rounded-lg object-cover"
+            />
+          </div>
+          <div className="mb-4 flex flex-col">
+            <h4 className="mt-2 text-xl font-semibold sm:text-2xl">
+              {event.title}
+            </h4>
+          </div>
+          <p className="text-base text-gray-600 sm:text-lg">
+            {event.description}
+          </p>
+        </motion.div>
+      </div>
+    </motion.div>
+  );
 };
 
 export const AboutMeTimeline: React.FC = () => {
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [direction, setDirection] = useState<number>(0);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: timelineRef,
+    offset: ["start start", "end end"],
+  });
 
-  const goToPrevious = useCallback(() => {
-    if (currentIndex > 0) {
-      setDirection(-1);
-      setCurrentIndex((prevIndex) => prevIndex - 1);
-    }
-  }, [currentIndex]);
-
-  const goToNext = useCallback(() => {
-    if (currentIndex < timelineEvents.length - 1) {
-      setDirection(1);
-      setCurrentIndex((prevIndex) => prevIndex + 1);
-    }
-  }, [currentIndex]);
-
-  const handleDotClick = useCallback(
-    (index: number) => {
-      setDirection(index > currentIndex ? 1 : -1);
-      setCurrentIndex(index);
-    },
-    [currentIndex],
+  const activeIndexProgress = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [0, timelineEvents.length - 1],
   );
 
-  const currentEvent = timelineEvents[currentIndex];
-
-  if (!currentEvent) {
-    return <div>No event data available</div>;
-  }
+  useEffect(() => {
+    const unsubscribe = activeIndexProgress.onChange((latest) => {
+      setActiveIndex(Math.round(latest));
+    });
+    return () => unsubscribe();
+  }, [activeIndexProgress]);
 
   return (
-    <div className="mx-auto w-full max-w-4xl">
-      <h2 className="mb-8 text-center text-3xl font-bold">My Journey</h2>
-      <div className="relative mb-12">
-        <div className="absolute left-0 right-0 top-1/2 h-px -translate-y-1/2 transform bg-gray-200"></div>
-        <div className="relative flex justify-between">
-          {timelineEvents.map((event, index) => (
-            <div key={event.year} className="flex flex-col items-center">
-              <motion.div
-                className={`h-2 w-2 cursor-pointer rounded-full ${index === currentIndex ? "bg-primary" : "bg-gray-300"}`}
-                initial={false}
-                animate={{
-                  scale: index === currentIndex ? 1.5 : 1,
-                  transition: { duration: 0.3 },
-                }}
-                onClick={() => handleDotClick(index)}
-              />
-              <span className="mt-2 text-xs font-medium text-gray-500">
-                {event.year}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="relative overflow-hidden" style={{ height: "400px" }}>
-        <AnimatePresence initial={false} custom={direction}>
-          <motion.div
-            key={currentIndex}
-            custom={direction}
-            variants={contentVariants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{
-              x: { type: "spring", stiffness: 300, damping: 30 },
-              opacity: { duration: 0.2 },
-            }}
-            className="absolute w-full"
-          >
-            <img
-              src={currentEvent.image}
-              alt={currentEvent.title}
-              className="mb-6 h-64 w-full rounded-lg object-cover"
-            />
-            <h4 className="mb-3 text-xl font-semibold">{currentEvent.title}</h4>
-            <p className="text-gray-600">{currentEvent.description}</p>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-      <div className="mt-8 flex justify-between">
-        <Button
-          variant="ghost"
-          onClick={goToPrevious}
-          disabled={currentIndex === 0}
-          className="text-gray-600 hover:text-gray-800"
-        >
-          <ChevronLeft className="mr-2 h-5 w-5" /> Previous
-        </Button>
-        <Button
-          variant="ghost"
-          onClick={goToNext}
-          disabled={currentIndex === timelineEvents.length - 1}
-          className="text-gray-600 hover:text-gray-800"
-        >
-          Next <ChevronRight className="ml-2 h-5 w-5" />
-        </Button>
+    <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-16 lg:px-8">
+      <h2 className="mb-8 text-center text-3xl font-bold sm:mb-12 sm:text-4xl">
+        My Journey
+      </h2>
+      <div ref={timelineRef} className="relative">
+        {timelineEvents.map((event, index) => (
+          <TimelineItem
+            key={event.year}
+            event={event}
+            isActive={index === activeIndex}
+          />
+        ))}
       </div>
     </div>
   );

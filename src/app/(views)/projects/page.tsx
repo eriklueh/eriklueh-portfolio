@@ -1,10 +1,12 @@
-"use client";
-const Projects: React.FC = () => {
-  return (
-    <div  className="text-4xl font-bold mb-12 text-center">
-      <p className="mb-8 text-lg">Laburanding</p>
-    </div>
-  );
-};
+import React from 'react'
+import {UnderDevelopment} from "@/components/common/under-development";
 
-export default Projects;
+export default function ProjectsPage() {
+    return (
+        <UnderDevelopment
+            title="Projects Coming Soon"
+            returnLink="/"
+            returnText="Explore Other Sections"
+        />
+    )
+}

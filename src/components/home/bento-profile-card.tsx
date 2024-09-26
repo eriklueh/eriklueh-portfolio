@@ -9,7 +9,7 @@ const startups = [
 
 export const MinimalBentoProfileCard: React.FC = () => {
     return (
-        <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-2">
             <Card className="col-span-full bg-background">
                 <CardContent className="p-6 flex flex-col sm:flex-row justify-between items-center">
                     <div className="text-center sm:text-left mb-4 sm:mb-0">
