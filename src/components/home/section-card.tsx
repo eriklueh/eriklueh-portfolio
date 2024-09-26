@@ -28,7 +28,7 @@ export const SectionCard: React.FC<SectionCardProps> = ({ title, icon: Icon, mod
                     <ambientLight intensity={0.5} />
                     <pointLight position={[10, 10, 10]} />
                     <Model />
-                    <OrbitControls enableZoom={false} enablePan={false} autoRotate={isHovered} autoRotateSpeed={5} />
+                    <OrbitControls enableZoom={false} enablePan={false} autoRotate={isHovered} autoRotateSpeed={20} />
                 </Canvas>
             </div>
             <div className="relative z-10 flex flex-col justify-between h-full p-6">

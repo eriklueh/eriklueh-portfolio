@@ -10,7 +10,7 @@ export const DottedShape: React.FC<DottedShapeProps> = ({ points, connections })
   const groupRef = useRef<THREE.Group>(null)
   const { theme } = useTheme()
 
-  const color = theme === 'dark' ? 'hsl(var(--primary))' : '#93866c'
+  const color = theme === 'dark' ? '#ffffff' : '#93866c'
 
   useFrame((_, delta) => {
     if (groupRef.current) {
