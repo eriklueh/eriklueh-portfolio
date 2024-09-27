@@ -25,7 +25,7 @@ export const ExperienceSearchCard: React.FC<ExperienceSearchCardProps> = ({
                                                                             searchTerm,
                                                                             onSearchChange,
                                                                           }) => {
-  const [activeTab, setActiveTab] = useState<"all" | "work" | "projects">("all");
+  const [activeTab, setActiveTab] = useState<"all" | "work" | "projects">("work");
   const contentRef = useRef<HTMLDivElement>(null);
 
   const filteredData = timelineData.filter(

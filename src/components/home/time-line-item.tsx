@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Briefcase, ChevronDown, ExternalLink, Code } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
@@ -13,6 +13,21 @@ interface TimelineItemProps {
 
 export const TimelineItem: React.FC<TimelineItemProps> = ({ item, onClick }) => {
     const [isOpen, setIsOpen] = useState(false)
+    const [showTooltip, setShowTooltip] = useState(false)
+    const tooltipTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+    const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        if (item.link === '/') {
+            e.preventDefault()
+            setShowTooltip(true)
+            if (tooltipTimeoutRef.current) {
+                clearTimeout(tooltipTimeoutRef.current)
+            }
+            tooltipTimeoutRef.current = setTimeout(() => {
+                setShowTooltip(false)
+            }, 1000)
+        }
+    }
 
     return (
         <Card className="mb-4">
@@ -43,15 +58,30 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({ item, onClick }) => 
                         }}
                         className="text-xs"
                     >
-                        {isOpen ? "Ver menos" : "Ver más"}
+                        {isOpen ? "See less" : "See more"}
                         <ChevronDown className={`ml-1 h-3 w-3 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
                     </Button>
                     {item.link && (
-                        <Button variant="outline" size="sm" asChild className="text-xs">
-                            <a href={item.link} target="_blank" rel="noopener noreferrer">
-                                Ver proyecto <ExternalLink className="ml-1 h-3 w-3" />
-                            </a>
-                        </Button>
+                        <div className="relative">
+                            <Button variant="outline" size="sm" asChild className="text-xs">
+                                <a href={item.link} target="_blank" rel="noopener noreferrer" onClick={handleLinkClick}>
+                                    View project <ExternalLink className="ml-1 h-3 w-3" />
+                                </a>
+                            </Button>
+                            <AnimatePresence>
+                                {showTooltip && (
+                                    <motion.div
+                                        initial={{ opacity: 0, x: -10 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0, x: -10 }}
+                                        className="absolute left-full ml-2 top-1 -translate-y-1/2 px-3 py-1 bg-transparent text-muted-foreground rounded-md text-sm whitespace-nowrap"
+                                    >
+                                        {/* eslint-disable-next-line react/no-unescaped-entities */}
+                                        <span role="img" aria-label="sparkles">✨</span> You're already here!
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
                     )}
                 </div>
                 <AnimatePresence>

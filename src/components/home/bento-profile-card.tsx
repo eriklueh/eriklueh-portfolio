@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Link from 'next/link'
 import { ArrowRight, Github, Linkedin, Twitter, Rocket, User, Download } from 'lucide-react'
 import { Button } from "@/components/ui/button"
@@ -5,11 +6,12 @@ import { Card, CardContent } from "@/components/ui/card"
 import { useTheme } from "next-themes"
 
 const startups = [
-    { name: "Walden.ai", role: "Front-end Developer", year: "2022" },
+    { name: "Walden.ai", role: "Front-end Developer", year: "2022 - present" },
 ]
 
 export const MinimalBentoProfileCard: React.FC = () => {
     const { theme } = useTheme()
+    const [hoveredIcon, setHoveredIcon] = useState<string | null>(null)
 
     const handleDownloadCV = () => {
         const cvFileName = theme === 'dark' ? 'dark-cv.pdf' : 'light-cv.pdf'
@@ -42,10 +44,23 @@ export const MinimalBentoProfileCard: React.FC = () => {
                                 </a>
                             </Button>
                         ))}
-                        <Button variant="outline" size="icon" onClick={handleDownloadCV}>
-                            <Download className="h-4 w-4" />
-                            <span className="sr-only">Download CV</span>
-                        </Button>
+                        <div className="relative">
+                            <Button
+                                variant="outline"
+                                size="icon"
+                                onClick={handleDownloadCV}
+                                onMouseEnter={() => setHoveredIcon('cv')}
+                                onMouseLeave={() => setHoveredIcon(null)}
+                            >
+                                <Download className="h-4 w-4" />
+                                <span className="sr-only">Download CV</span>
+                            </Button>
+                            {hoveredIcon === 'cv' && (
+                                <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-secondary text-secondary-foreground px-2 py-1 rounded text-xs whitespace-nowrap">
+                                    Download CV
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </CardContent>
             </Card>
@@ -63,11 +78,13 @@ export const MinimalBentoProfileCard: React.FC = () => {
                         experience through work and startup ventures, allowing me to develop a diverse skill set
                         and adaptability in the fast-paced tech industry.
                     </p>
-                    <Button asChild className="mt-4 w-full sm:w-auto">
-                        <Link href="/contact" className="flex items-center justify-center">
-                            Get in Touch <ArrowRight className="ml-2 h-4 w-4" />
-                        </Link>
-                    </Button>
+                    <div className="flex justify-end mt-4">
+                        <Button asChild>
+                            <Link href="/contact" className="flex items-center justify-center">
+                                Get in Touch <ArrowRight className="ml-2 h-4 w-4" />
+                            </Link>
+                        </Button>
+                    </div>
                 </CardContent>
             </Card>
 
@@ -78,7 +95,7 @@ export const MinimalBentoProfileCard: React.FC = () => {
                     </h2>
                     <div className="flex-grow">
                         {startups.map((startup) => (
-                            <div key={startup.name} className="bg-muted p-4 rounded-lg">
+                            <div key={startup.name} className="bg-muted p-4 my-1 rounded-lg">
                                 <h3 className="font-semibold">{startup.name}</h3>
                                 <p className="text-sm text-muted-foreground">{startup.role}</p>
                                 <p className="text-sm text-muted-foreground">{startup.year}</p>

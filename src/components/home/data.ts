@@ -72,6 +72,7 @@ export const timelineData: TimelineItem[] = [
             "- Deployed on Vercel for seamless hosting and continuous deployment",
         ],
         type: "project",
+        link:"https://quirk-one.vercel.app/",
         skills: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel", "Aceternity UI", "Framer Motion"]
     },
     {
@@ -96,6 +97,7 @@ export const timelineData: TimelineItem[] = [
             "- Dark mode support for improved accessibility"
         ],
         type: "project",
+        link:"/",
         skills: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Three.js", "Framer Motion", "shadcn/ui", "swapy", "Vercel"]
     },
     {
@@ -117,6 +119,7 @@ export const timelineData: TimelineItem[] = [
             "- Optimized for search engines to improve online visibility"
         ],
         type: "project",
+        link:"https://www.nuvadi.com/",
         skills: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel", "SEO optimization"]
     },
     {
@@ -139,6 +142,7 @@ export const timelineData: TimelineItem[] = [
             "- Customized reports and insights for different investor types"
         ],
         type: "project",
+        link:"https://app.walden.ai/",
         skills: ["React", "Next.js", "JavaScript", "Material-UI", "AWS S3", "AWS EC2", "AWS Lambda", "AWS RDS", "Data Visualization", "Python", "Go"]
     },
     {
@@ -156,6 +160,7 @@ export const timelineData: TimelineItem[] = [
             "- shadcn/ui for UI components"
         ],
         type: "project",
+        link:"https://mysterybox.walden.ai/",
         skills: ["Next.js", "React", "TypeScript", "Vercel", "Spline", "Tailwind CSS", "shadcn/ui"]
     }
 ]
