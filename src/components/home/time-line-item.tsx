@@ -44,7 +44,7 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({ item, onClick }) => 
                         className="text-xs"
                     >
                         {isOpen ? "Ver menos" : "Ver más"}
-                        <ChevronDown className="ml-1 h-3 w-3" />
+                        <ChevronDown className={`ml-1 h-3 w-3 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
                     </Button>
                     {item.link && (
                         <Button variant="outline" size="sm" asChild className="text-xs">
@@ -62,11 +62,20 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({ item, onClick }) => 
                             exit={{ opacity: 0, height: 0 }}
                             transition={{ duration: 0.3 }}
                         >
-                            <Card className="mt-2 bg-muted">
-                                <CardContent className="p-2">
-                                    <p className="text-xs text-muted-foreground">{item.details}</p>
-                                </CardContent>
-                            </Card>
+                            <div className="mt-3 space-y-2 text-sm">
+                                {item.details.map((detail, index) => (
+                                    <div key={index} className={`${detail.startsWith('-') ? 'ml-3 text-muted-foreground' : 'font-medium text-primary'}`}>
+                                        {detail.startsWith('-') ? (
+                                            <div className="flex items-start">
+                                                <span className="mr-2 text-primary">•</span>
+                                                <span>{detail.slice(1).trim()}</span>
+                                            </div>
+                                        ) : (
+                                            detail
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
                         </motion.div>
                     )}
                 </AnimatePresence>

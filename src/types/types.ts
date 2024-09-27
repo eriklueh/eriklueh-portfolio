@@ -36,7 +36,7 @@ export interface TimelineItem {
   title: string;
   company: string;
   description: string;
-  details: string;
+  details: string[];
   type: "work" | "project";
   skills: string[];
   link?: string;
