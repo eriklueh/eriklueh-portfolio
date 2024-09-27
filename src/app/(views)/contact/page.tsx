@@ -15,6 +15,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { useState } from "react";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -27,6 +28,8 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 export default function Contact() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -36,26 +39,36 @@ export default function Contact() {
     },
   });
 
-  const onSubmit = (data: FormValues) => {
-    const subject = encodeURIComponent("New Contact Form Submission");
-    const body = encodeURIComponent(
-      `Name: ${data.name}\nEmail: ${data.email}\n\nMessage:\n${data.message}`,
-    );
-    const mailtoLink = `mailto:erikhire@nuvadi.com?subject=${subject}&body=${body}`;
+  const onSubmit = async (data: FormValues) => {
+    setIsSubmitting(true);
+    try {
+      const response = await fetch("/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
-    window.location.href = mailtoLink;
-
-    toast.success("Email client opened", {
-      description:
-        "Please send the email from your client to complete the process.",
-    });
-
-    form.reset();
+      if (response.ok) {
+        toast.success("Message sent successfully", {
+          description: "We'll get back to you as soon as possible.",
+        });
+        form.reset();
+      } else {
+        throw new Error("Failed to send email");
+      }
+    } catch (error) {
+      toast.error("Failed to send message", {
+        description: "Please try again later or contact us directly.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="mb-6 text-3xl font-bold">Contact</h1>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -100,8 +113,8 @@ export default function Contact() {
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full">
-            Send Message
+          <Button type="submit" className="w-full" disabled={isSubmitting}>
+            {isSubmitting ? "Sending..." : "Send Message"}
           </Button>
         </form>
       </Form>

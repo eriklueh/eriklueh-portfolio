@@ -13,9 +13,9 @@ const socialItems = [
   {
     icon: Linkedin,
     label: "LinkedIn",
-    href: "https://www.linkedin.com/in/yourusername",
+    href: "https://www.linkedin.com/in/eriklueh/",
   },
-  { icon: Mail, label: "Email", href: "mailto:your.email@example.com" },
+  { icon: Mail, label: "Email", href: "/contact" },
 ];
 
 const useIsMobile = () => {
