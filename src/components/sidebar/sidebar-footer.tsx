@@ -15,7 +15,7 @@ const socialItems = [
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/eriklueh/",
   },
-  { icon: Mail, label: "Email", href: "/contact" },
+  { icon: Mail, label: "Email", href: "mailto:erikhire@nuvadi.com" },
 ];
 
 const useIsMobile = () => {

@@ -4,7 +4,13 @@ import { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Briefcase, Home, Mail, User, Codesandbox, Receipt } from "lucide-react";
+import {
+  Briefcase,
+  Home,
+  User,
+  Codesandbox,
+  Receipt,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "@/hooks/useTranslations";
 import { useSidebar } from "@/hooks/use-sidebar";
@@ -20,7 +26,6 @@ export function SidebarNavigation() {
     { icon: Briefcase, label: t("nav.projects"), href: "/projects" },
     { icon: Receipt, label: t("nav.pricing"), href: "/pricing" },
     { icon: Codesandbox, label: t("nav.sandbox"), href: "/sandbox" },
-    { icon: Mail, label: t("nav.contact"), href: "/contact" },
   ];
 
   return (
