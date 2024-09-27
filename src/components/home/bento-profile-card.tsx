@@ -1,13 +1,26 @@
 import Link from 'next/link'
-import { ArrowRight, Github, Linkedin, Twitter, Rocket, User } from 'lucide-react'
+import { ArrowRight, Github, Linkedin, Twitter, Rocket, User, Download } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import { useTheme } from "next-themes"
 
 const startups = [
     { name: "Walden.ai", role: "Front-end Developer", year: "2022" },
 ]
 
 export const MinimalBentoProfileCard: React.FC = () => {
+    const { theme } = useTheme()
+
+    const handleDownloadCV = () => {
+        const cvFileName = theme === 'dark' ? 'dark-cv.pdf' : 'light-cv.pdf'
+        const link = document.createElement('a')
+        link.href = `/${cvFileName}`
+        link.download = 'Erik_Estrada_Herrera_CV.pdf'
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+    }
+
     return (
         <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-2">
             <Card className="col-span-full bg-background">
@@ -29,6 +42,10 @@ export const MinimalBentoProfileCard: React.FC = () => {
                                 </a>
                             </Button>
                         ))}
+                        <Button variant="outline" size="icon" onClick={handleDownloadCV}>
+                            <Download className="h-4 w-4" />
+                            <span className="sr-only">Download CV</span>
+                        </Button>
                     </div>
                 </CardContent>
             </Card>

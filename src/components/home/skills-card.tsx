@@ -1,14 +1,15 @@
 import { Code } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import {timelineData} from "@/components/home/data";
+import { timelineData } from "@/components/home/data"
 
 const skills = Array.from(new Set(timelineData.flatMap(item => item.skills))).sort()
 
 interface SkillsCardProps {
     onSkillClick: (skill: string) => void;
+    selectedSkill: string;
 }
 
-export const SkillsCard: React.FC<SkillsCardProps> = ({ onSkillClick }) => {
+export const SkillsCard: React.FC<SkillsCardProps> = ({ onSkillClick, selectedSkill }) => {
     return (
         <Card className="flex flex-col max-h-[400px]">
             <CardHeader className="flex-shrink-0">
@@ -22,8 +23,12 @@ export const SkillsCard: React.FC<SkillsCardProps> = ({ onSkillClick }) => {
                     {skills.map((skill) => (
                         <button
                             key={skill}
-                            className="bg-primary/10 text-primary px-2 py-1 rounded-full text-sm hover:bg-primary/20 transition-colors"
-                            onClick={() => onSkillClick(skill)}
+                            className={`px-3 py-1.5 rounded-full text-sm ${
+                                skill === selectedSkill
+                                    ? "bg-primary text-primary-foreground"
+                                    : "bg-primary/10 text-primary hover:bg-primary/20"
+                            }`}
+                            onClick={() => onSkillClick(skill === selectedSkill ? "" : skill)}
                         >
                             {skill}
                         </button>

@@ -14,7 +14,7 @@ export const timelineData: TimelineItem[] = [
     {
         year: "2024-present",
         title: "Freelance Developer",
-        company: "Agile Advocate",
+        company: "",
         description: "Specialized in creating custom components, views, and web applications tailored to client needs.",
         details: [
             "Development Focus:",
