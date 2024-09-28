@@ -1,4 +1,4 @@
-import { AboutMeTimeline } from '@/components/about/about-me-timeline'
+import AboutMeTimeline from "@/components/about/about-me-timeline";
 
 export const metadata = {
     title: 'About Me | Erik Estrada Herrera',

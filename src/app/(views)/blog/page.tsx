@@ -4,7 +4,7 @@ import {UnderDevelopment} from "@/components/common/under-development";
 export default function PricingPage() {
     return (
         <UnderDevelopment
-            title="Blog Coming Soon"
+            title="Pricing Coming Soon"
             returnLink="/"
             returnText="Explore Other Sections"
         />

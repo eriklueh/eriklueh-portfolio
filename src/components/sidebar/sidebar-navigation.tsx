@@ -9,6 +9,7 @@ import {
   Home,
   User,
   Codesandbox,
+    Book,
   Receipt,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -26,6 +27,7 @@ export function SidebarNavigation() {
     { icon: Briefcase, label: t("nav.projects"), href: "/projects" },
     { icon: Receipt, label: t("nav.pricing"), href: "/pricing" },
     { icon: Codesandbox, label: t("nav.sandbox"), href: "/sandbox" },
+    { icon: Book, label: t("nav.blog"), href: "/blog" },
   ];
 
   return (

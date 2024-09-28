@@ -1,4 +1,4 @@
-import { User, Briefcase, DollarSign, Mail, Box } from 'lucide-react'
+import { User, Briefcase, DollarSign, Book, Box } from 'lucide-react'
 import { DottedCube, DottedOctahedron, DottedIcosahedron, DottedDodecahedron, DottedTetrahedron } from '@/components/three/dotted-shapes'
 import type { Section, TimelineItem } from "@/types/types";
 
@@ -7,7 +7,7 @@ export const sections: Section[] = [
     { title: "Projects", icon: Briefcase, model: DottedOctahedron },
     { title: "Pricing", icon: DollarSign, model: DottedIcosahedron },
     { title: "Sandbox", icon: Box, model: DottedDodecahedron },
-    { title: "Contact", icon: Mail, model: DottedTetrahedron },
+    { title: "Blog", icon: Book, model: DottedTetrahedron },
 ]
 
 export const timelineData: TimelineItem[] = [
