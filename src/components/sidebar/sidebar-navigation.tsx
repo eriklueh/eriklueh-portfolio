@@ -1,16 +1,13 @@
-"use client";
-
-import { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
+  Book,
   Briefcase,
-  Home,
-  User,
   Codesandbox,
-    Book,
+  Home,
   Receipt,
+  User,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "@/hooks/useTranslations";
@@ -30,9 +27,16 @@ export function SidebarNavigation() {
     { icon: Book, label: t("nav.blog"), href: "/blog" },
   ];
 
+  const isActive = (href: string) => {
+    if (href === '/') {
+      return pathname === href;
+    }
+    return pathname.startsWith(href);
+  };
+
   return (
       <nav className="flex-1 overflow-y-auto">
-        <ul className={cn("space-y-2 mt-3", isExpanded ? "px-3" : "px-3")}>
+        <ul className={cn("mt-3 space-y-2", isExpanded ? "px-3" : "px-3")}>
           {navItems.map((item, index) => (
               <motion.li
                   key={index}
@@ -47,7 +51,7 @@ export function SidebarNavigation() {
                         isExpanded
                             ? "justify-start space-x-3 px-3 py-2"
                             : "justify-center p-2",
-                        pathname === item.href ? "bg-background shadow-md" : ""
+                        isActive(item.href) ? "bg-background shadow-md" : "",
                     )}
                 >
                   <motion.div
@@ -69,8 +73,10 @@ export function SidebarNavigation() {
                           size={18}
                           className={cn(
                               "transition-colors duration-200",
-                              pathname === item.href ? "text-primary" : "text-muted-foreground",
-                              "group-hover:text-foreground"
+                              isActive(item.href)
+                                  ? "text-primary"
+                                  : "text-muted-foreground",
+                              "group-hover:text-foreground",
                           )}
                       />
                     </motion.div>
@@ -78,8 +84,10 @@ export function SidebarNavigation() {
                       {isExpanded && (
                           <motion.span
                               className={cn(
-                                  "text-sm font-bold whitespace-nowrap",
-                                  pathname === item.href ? "text-primary" : "text-muted-foreground"
+                                  "whitespace-nowrap text-sm font-bold",
+                                  isActive(item.href)
+                                      ? "text-primary"
+                                      : "text-muted-foreground",
                               )}
                               initial={{ opacity: 0, width: 0 }}
                               animate={{ opacity: 1, width: "auto" }}
