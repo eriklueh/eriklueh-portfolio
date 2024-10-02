@@ -80,7 +80,7 @@ export const MinimalBentoProfileCard: React.FC = () => {
                     </p>
                     <div className="flex justify-end mt-4">
                         <Button asChild>
-                            <Link href="/contact" className="flex items-center justify-center">
+                            <Link href="mailto:erikhire@nuvadi.com" className="flex items-center justify-center">
                                 Get in Touch <ArrowRight className="ml-2 h-4 w-4" />
                             </Link>
                         </Button>
