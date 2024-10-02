@@ -10,21 +10,19 @@ import {
   User,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useTranslation } from "@/hooks/useTranslations";
 import { useSidebar } from "@/hooks/use-sidebar";
 
 export function SidebarNavigation() {
   const { isExpanded } = useSidebar();
   const pathname = usePathname();
-  const { t } = useTranslation();
 
   const navItems = [
-    { icon: Home, label: t("nav.home"), href: "/" },
-    { icon: User, label: t("nav.about"), href: "/about" },
-    { icon: Briefcase, label: t("nav.projects"), href: "/projects" },
-    { icon: Receipt, label: t("nav.pricing"), href: "/pricing" },
-    { icon: Codesandbox, label: t("nav.sandbox"), href: "/sandbox" },
-    { icon: Book, label: t("nav.blog"), href: "/blog" },
+    { icon: Home, label: "Home", href: "/" },
+    { icon: User, label: "About", href: "/about" },
+    { icon: Briefcase, label: "Projects", href: "/projects" },
+    { icon: Receipt, label: "Pricing", href: "/pricing" },
+    { icon: Codesandbox, label: "Sandbox", href: "/sandbox" },
+    { icon: Book, label: "Blog", href: "/blog" },
   ];
 
   const isActive = (href: string) => {
