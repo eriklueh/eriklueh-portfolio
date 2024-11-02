@@ -72,7 +72,7 @@ export function TechIconCloudComponent({ iconSlugs }: TechIconCloudProps) {
   }, [iconSlugs]);
 
   const renderedIcons = useMemo(() => {
-    if (!data) return null;
+    if (!data) return [];
 
     return Object.values(data.simpleIcons).map((icon) =>
         renderCustomIcon(icon, theme ?? "light")
@@ -81,7 +81,11 @@ export function TechIconCloudComponent({ iconSlugs }: TechIconCloudProps) {
 
   return (
       <div className="relative flex size-full items-center justify-center overflow-hidden">
-        <Cloud {...cloudProps}>{renderedIcons}</Cloud>
+        <Cloud {...cloudProps}>
+          {renderedIcons.map((icon, index) => (
+              <div key={index}>{icon}</div>
+          ))}
+        </Cloud>
       </div>
   );
 }
