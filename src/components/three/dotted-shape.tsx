@@ -1,22 +1,36 @@
 "use client"
 
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { useFrame } from '@react-three/fiber'
-import type * as THREE from 'three'
+import * as THREE from 'three'
 import type { DottedShapeProps } from "@/types/types"
 import { useTheme } from 'next-themes'
 
 export const DottedShape: React.FC<DottedShapeProps> = ({ points, connections }) => {
   const groupRef = useRef<THREE.Group>(null)
-  const { theme } = useTheme()
+  const { resolvedTheme } = useTheme()
+  const [targetColor, setTargetColor] = useState(new THREE.Color('#ffffff'))
+  const currentColor = useRef(new THREE.Color('#ffffff'))
 
-  const color = theme === 'dark' ? '#ffffff' : '#93866c'
+  useEffect(() => {
+    if (resolvedTheme) {
+      setTargetColor(new THREE.Color(resolvedTheme === 'dark' ? '#ffffff' : '#93866c'))
+    }
+  }, [resolvedTheme])
 
   useFrame((_, delta) => {
     if (groupRef.current) {
       groupRef.current.rotation.x += delta * 0.2
       groupRef.current.rotation.y += delta * 0.1
     }
+
+    // Color transition
+    currentColor.current.lerp(targetColor, 0.1)
+    groupRef.current?.traverse((child) => {
+      if (child instanceof THREE.Mesh) {
+        (child.material as THREE.MeshBasicMaterial).color = currentColor.current
+      }
+    })
   })
 
   return (
@@ -35,7 +49,7 @@ export const DottedShape: React.FC<DottedShapeProps> = ({ points, connections })
                 return (
                     <mesh key={i} position={[x, y, z]}>
                       <sphereGeometry args={[0.03, 8, 8]} />
-                      <meshBasicMaterial color={color} />
+                      <meshBasicMaterial />
                     </mesh>
                 )
               })}
