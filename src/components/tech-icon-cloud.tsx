@@ -81,7 +81,6 @@ export function TechIconCloudComponent({ iconSlugs }: TechIconCloudProps) {
 
   return (
       <div className="relative flex size-full items-center justify-center overflow-hidden">
-        {/* @ts-ignore */}
         <Cloud {...cloudProps}>{renderedIcons}</Cloud>
       </div>
   );
