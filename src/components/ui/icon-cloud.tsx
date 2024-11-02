@@ -2,12 +2,11 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useTheme } from "next-themes";
+import type { ICloud, SimpleIcon } from "react-icon-cloud";
 import {
   Cloud,
   fetchSimpleIcons,
-  ICloud,
   renderSimpleIcon,
-  SimpleIcon,
 } from "react-icon-cloud";
 
 export const cloudProps: Omit<ICloud, "children"> = {
@@ -33,11 +32,10 @@ export const cloudProps: Omit<ICloud, "children"> = {
     outlineColour: "#0000",
     maxSpeed: 0.04,
     minSpeed: 0.02,
-    // dragControl: false,
   },
 };
 
-export const renderCustomIcon = (icon: SimpleIcon, theme: string) => {
+export const renderCustomIcon = (icon: SimpleIcon, theme: string): JSX.Element => {
   const bgHex = theme === "light" ? "#f3f2ef" : "#080510";
   const fallbackHex = theme === "light" ? "#6e6e73" : "#ffffff";
   const minContrastRatio = theme === "dark" ? 2 : 1.2;
@@ -52,7 +50,9 @@ export const renderCustomIcon = (icon: SimpleIcon, theme: string) => {
       href: undefined,
       target: undefined,
       rel: undefined,
-      onClick: (e: any) => e.preventDefault(),
+      onClick: (e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault();
+      },
     },
   });
 };
@@ -68,21 +68,23 @@ export default function IconCloud({ iconSlugs }: DynamicCloudProps) {
   const { theme } = useTheme();
 
   useEffect(() => {
-    fetchSimpleIcons({ slugs: iconSlugs }).then(setData);
+    void fetchSimpleIcons({ slugs: iconSlugs }).then(setData);
   }, [iconSlugs]);
 
   const renderedIcons = useMemo(() => {
     if (!data) return null;
 
     return Object.values(data.simpleIcons).map((icon) =>
-      renderCustomIcon(icon, theme || "light"),
+        renderCustomIcon(icon, theme ?? "light")
     );
   }, [data, theme]);
 
   return (
-    // @ts-ignore
-    <Cloud {...cloudProps}>
-      <>{renderedIcons}</>
-    </Cloud>
+      // @ts-expect-error - The Cloud component from react-icon-cloud has incomplete type definitions
+      <Cloud {...cloudProps}>
+        {renderedIcons?.map((icon, index) => (
+            <div key={index}>{icon}</div>
+        ))}
+      </Cloud>
   );
 }
