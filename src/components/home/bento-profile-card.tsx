@@ -7,6 +7,7 @@ import { useTheme } from "next-themes"
 
 const startups = [
     { name: "Walden.ai", role: "Front-end Developer", year: "2022 - present" },
+    { name: "Renvance", role: "Front-end Developer", year: "2024 - present" },
 ]
 
 export const MinimalBentoProfileCard: React.FC = () => {
@@ -14,7 +15,7 @@ export const MinimalBentoProfileCard: React.FC = () => {
     const [hoveredIcon, setHoveredIcon] = useState<string | null>(null)
 
     const handleDownloadCV = () => {
-        const cvFileName = theme === 'dark' ? 'dark-cv.pdf' : 'light-cv.pdf'
+        const cvFileName = theme === 'light' ? 'light-cv.pdf' : 'dark-cv.pdf'
         const link = document.createElement('a')
         link.href = `/${cvFileName}`
         link.download = 'Erik_Estrada_Herrera_CV.pdf'

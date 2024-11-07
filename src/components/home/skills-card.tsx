@@ -20,9 +20,8 @@ export const SkillsCard: React.FC<SkillsCardProps> = ({ onSkillClick, selectedSk
         "amazonaws", "amazonec2", "awslambda", "amazons3", "amazonrds",
         "aceternityui", "antdesign", "chakraui", "drizzle", "framer",
         "gitlab", "go", "javascript", "langchain", "materialui",
-        "nextdotjs", "openai", "python", "radixui", "react",
-        "seo", "supabase", "tailwindcss", "threedotjs", "typescript",
-        "vercel"
+        "nextdotjs", "openai", "python", "radixui", "react","supabase", "tailwindcss", "threedotjs", "typescript",
+        "vercel","vite","leaflet","stripe","auth0"
     ]
 
     return (

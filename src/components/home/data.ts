@@ -162,5 +162,26 @@ export const timelineData: TimelineItem[] = [
         type: "project",
         link:"https://mysterybox.walden.ai/",
         skills: ["Next.js", "React", "TypeScript", "Vercel", "Spline", "Tailwind CSS", "shadcn/ui"]
-    }
+    },
+    {
+        year: "2024-present",
+        title: "Frontend Developer",
+        company: "RENVANCE",
+        description: "Led UI/UX improvements and code optimization initiatives.",
+        details: [
+            "UI/UX Improvements:",
+            "- Led initiatives to implement intuitive and attractive designs",
+            "- Significantly elevated user experience across multiple application views",
+            "Code Optimization:",
+            "- Executed comprehensive frontend code refactoring",
+            "- Improved code readability and maintainability",
+            "- Reduced development time for future updates",
+            "Performance Enhancements:",
+            "- Optimized application performance through efficient component implementation",
+            "- Adopted and implemented frontend development best practices",
+            "- Enhanced the platform's visual coherence and overall user experience"
+        ],
+        type: "work",
+        skills: ["React", "Vite", "Material-UI", "UI/UX"]
+    },
 ]
